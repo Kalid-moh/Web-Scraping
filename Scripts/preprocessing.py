@@ -139,6 +139,27 @@ class ReviewPreprocessor:
         self.stats['rows_removed_missing'] = removed
         # Record the new total count in stats
         self.stats['count_after_missing'] = len(self.df)
+    
+
+    def remove_duplicates(self):
+        
+
+      """Remove duplicate reviews"""
+      print("\n[?/?] Removing duplicates...")
+
+    before = len(self.df)
+
+    # Remove duplicates based on review_text + rating + bank_name
+    self.df = self.df.drop_duplicates(
+        subset=['review_text', 'rating', 'bank_name'],
+        keep='first'
+    )
+
+    removed = before - len(self.df)
+    print(f"Removed {removed} duplicate reviews")
+
+    self.stats['duplicates_removed'] = removed
+
 
     def normalize_dates(self):
         """Normalize date formats to YYYY-MM-DD"""
@@ -372,6 +393,7 @@ class ReviewPreprocessor:
         self.check_missing_data()
         # self.remove_duplicates() - REMOVED AS REQUESTED
         self.handle_missing_values()
+        self.remove_duplicates()
         self.normalize_dates()
         self.clean_text()
         self.validate_ratings()
