@@ -29,7 +29,7 @@ from datetime import datetime
 # Import re module for regular expression operations (used for text cleaning)
 import re
 # Import DATA_PATHS dictionary from the local config module
-from config import DATA_PATHS
+from Scripts.config import DATA_PATHS
 
 
 class ReviewPreprocessor:
@@ -79,7 +79,7 @@ class ReviewPreprocessor:
     def check_missing_data(self):
         """Check for missing data"""
         # Print a header for this step [1/6]
-        print("\n[1/6] Checking for missing data...")
+        print("\n[1/7] Checking for missing data...")
 
         # Calculate the count of missing (null) values for each column
         missing = self.df.isnull().sum()
@@ -113,7 +113,7 @@ class ReviewPreprocessor:
     def handle_missing_values(self):
         """Handle missing values"""
         # Print a header for this step [2/6]
-        print("\n[2/6] Handling missing values...")
+        print("\n[2/7] Handling missing values...")
 
         # Define the critical columns again
         critical_cols = ['review_text', 'rating', 'bank_name']
@@ -142,29 +142,27 @@ class ReviewPreprocessor:
     
 
     def remove_duplicates(self):
-        
+        """Remove duplicate reviews"""
+        print("\n[3/7] Removing duplicates...")
 
-      """Remove duplicate reviews"""
-      print("\n[?/?] Removing duplicates...")
+        # Count before
+        before = len(self.df)
 
-    before = len(self.df)
+        # Remove duplicates based on review_text + rating + bank_name
+        self.df = self.df.drop_duplicates(
+            subset=['review_text', 'rating', 'bank_name'],
+            keep='first'
+        )
 
-    # Remove duplicates based on review_text + rating + bank_name
-    self.df = self.df.drop_duplicates(
-        subset=['review_text', 'rating', 'bank_name'],
-        keep='first'
-    )
-
-    removed = before - len(self.df)
-    print(f"Removed {removed} duplicate reviews")
-
-    self.stats['duplicates_removed'] = removed
+        removed = before - len(self.df)
+        print(f"Removed {removed} duplicate reviews")
+        self.stats['duplicates_removed'] = removed
 
 
     def normalize_dates(self):
         """Normalize date formats to YYYY-MM-DD"""
         # Print a header for this step [3/6]
-        print("\n[3/6] Normalizing dates...")
+        print("\n[4/7] Normalizing dates...")
 
         try:
             # Convert the 'review_date' column to pandas datetime objects
@@ -189,7 +187,7 @@ class ReviewPreprocessor:
     def clean_text(self):
         """Clean review text"""
         # Print a header for this step [4/6]
-        print("\n[4/6] Cleaning text...")
+        print("\n[5/7] Cleaning text...")
 
         def clean_review_text(text):
             """Inner function to clean individual review text strings"""
@@ -233,7 +231,7 @@ class ReviewPreprocessor:
     def validate_ratings(self):
         """Validate rating values (should be 1-5)"""
         # Print a header for this step [5/6]
-        print("\n[5/6] Validating ratings...")
+        print("\n[6/7] Validating ratings...")
 
         # Find rows where 'rating' is less than 1 OR greater than 5
         invalid = self.df[(self.df['rating'] < 1) | (self.df['rating'] > 5)]
@@ -254,7 +252,7 @@ class ReviewPreprocessor:
     def prepare_final_output(self):
         """Prepare final output format"""
         # Print a header for this step [6/6]
-        print("\n[6/6] Preparing final output...")
+        print("\n[7/7] Preparing final output...")
 
         # Define a list of columns in the desired order for the final output file
         output_columns = [
@@ -391,7 +389,7 @@ class ReviewPreprocessor:
 
         # Run each step of the pipeline in sequence
         self.check_missing_data()
-        # self.remove_duplicates() - REMOVED AS REQUESTED
+       
         self.handle_missing_values()
         self.remove_duplicates()
         self.normalize_dates()

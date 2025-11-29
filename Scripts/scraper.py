@@ -16,7 +16,7 @@ import pandas as pd
 from datetime import datetime
 import time
 from tqdm import tqdm
-from config import APP_IDS, BANK_NAMES, SCRAPING_CONFIG, DATA_PATHS
+from Scripts.config import APP_IDS, BANK_NAMES, SCRAPING_CONFIG, DATA_PATHS
 
 
 class PlayStoreScraper:

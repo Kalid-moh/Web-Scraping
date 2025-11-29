@@ -7,6 +7,11 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
+# Project root (folder containing Scripts/)
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+
+
 # Google Play Store App IDs
 APP_IDS = {
 # env
@@ -31,15 +36,16 @@ SCRAPING_CONFIG = {
     'country': 'et'  # Ethiopia
 }
 
-# File Paths
+# File Paths (absolute paths)
 DATA_PATHS = {
-    'raw': 'data/raw',
-    'processed': 'data/processed',
-    'raw_reviews': 'data/raw/reviews_raw.csv',
-    'processed_reviews': 'data/processed/reviews_processed.csv',
-    'sentiment_results': 'data/processed/reviews_with_sentiment.csv',
-    'final_results': 'data/processed/reviews_final.csv'
+    'raw': os.path.join(PROJECT_ROOT, 'data', 'raw'),
+    'processed': os.path.join(PROJECT_ROOT, 'data', 'processed'),
+    'raw_reviews': os.path.join(PROJECT_ROOT, 'data', 'raw', 'reviews_raw.csv'),
+    'processed_reviews': os.path.join(PROJECT_ROOT, 'data', 'processed', 'reviews_processed.csv'),
+    'sentiment_results': os.path.join(PROJECT_ROOT, 'data', 'processed', 'reviews_with_sentiment.csv'),
+    'final_results': os.path.join(PROJECT_ROOT, 'data', 'processed', 'reviews_final.csv')
 }
+
 
 
 
