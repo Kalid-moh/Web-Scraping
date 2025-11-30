@@ -7,24 +7,20 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-# Project root (folder containing Scripts/)
+# Project root (folder containing Scripts/, data/, notebook/)
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-
-
 
 # Google Play Store App IDs
 APP_IDS = {
-# env
     'CBE': os.getenv('CBE_APP_ID', 'com.combanketh.mobilebanking'),
     'BOA': os.getenv('BOA_APP_ID', 'com.boa.boaMobileBanking'),
     'Dashenbank': os.getenv('DASHENBANK_APP_ID', 'com.dashen.dashensuperapp')
-
 }
 
 # Bank Names Mapping
 BANK_NAMES = {
     'CBE': 'Commercial Bank of Ethiopia',
-    'BOA': 'Bank of Abyssinia ',
+    'BOA': 'Bank of Abyssinia',
     'Dashenbank': 'Dashen Bank'
 }
 
@@ -33,7 +29,7 @@ SCRAPING_CONFIG = {
     'reviews_per_bank': int(os.getenv('REVIEWS_PER_BANK', 400)),
     'max_retries': int(os.getenv('MAX_RETRIES', 3)),
     'lang': 'en',
-    'country': 'et'  # Ethiopia
+    'country': 'et'
 }
 
 # File Paths (absolute paths)
@@ -45,13 +41,3 @@ DATA_PATHS = {
     'sentiment_results': os.path.join(PROJECT_ROOT, 'data', 'processed', 'reviews_with_sentiment.csv'),
     'final_results': os.path.join(PROJECT_ROOT, 'data', 'processed', 'reviews_final.csv')
 }
-
-
-
-
-
-
-
-
-
-
