@@ -40,7 +40,7 @@ def cluster_keywords(keywords):
             themes["Other"].append(kw)
     return dict(themes)
 
-def assign_themes(df, text_col="review"):
+def assign_themes(df, text_col="review_text"):
     texts = preprocess_texts(df[text_col])
     keywords = extract_keywords(texts, ngram_range=(1,2), top_k=20)
     theme_dict = cluster_keywords(keywords)
